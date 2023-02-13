@@ -4,6 +4,7 @@
 #include <stdint.h>
 #include <util/file.h>
 
+// TODO(Chloe): Shader Uniforms
 struct shader_program {
     uint32_t program_id;
 };

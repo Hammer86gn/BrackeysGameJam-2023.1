@@ -12,9 +12,9 @@ struct vbo {
 };
 
 struct vbo* create_vbo();
-struct vbo* create_immediate_vbo( float* vertices );
+struct vbo* create_immediate_vbo( float* vertices, ssize_t size );
 
-void set_vbo_data( struct vbo* vbo, float* vertices );
+void set_vbo_data( struct vbo* vbo, float* vertices, ssize_t size );
 
 void bind_vbo( struct vbo* vbo );
 void bind_no_vbo();
@@ -33,9 +33,9 @@ struct ibo {
 };
 
 struct ibo* create_ibo();
-struct ibo* create_immediate_ibo( uint32_t* indices );
+struct ibo* create_immediate_ibo( uint32_t* indices, ssize_t size );
 
-void set_ibo_data( struct ibo* ibo, uint32_t* indices );
+void set_ibo_data( struct ibo* ibo, uint32_t* indices, ssize_t size );
 
 void bind_ibo( struct ibo* ibo );
 void bind_no_ibo();
@@ -48,7 +48,7 @@ struct vertex_attrib {
 
     uint32_t attrib_index;
 
-    uint32_t attrib_type_components;
+    int32_t attrib_type_components;
     uint32_t attrib_type_base;
     ssize_t attrib_type_base_size;
 
@@ -61,7 +61,7 @@ struct vao {
     ssize_t attrib_array_len;
     struct vertex_attrib* attrib_array;
 
-    ssize_t attrib_stride;
+    int32_t attrib_stride;
 
     uint32_t vao_id;
 };

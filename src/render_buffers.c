@@ -14,18 +14,18 @@ struct vbo* create_vbo()
     return vbo;
 }
 
-struct vbo* create_immediate_vbo( float* vertices )
+struct vbo* create_immediate_vbo( float* vertices, ssize_t size )
 {
     struct vbo* vbo = create_vbo();
     bind_vbo( vbo );
-    set_vbo_data( vbo, vertices );
+    set_vbo_data( vbo, vertices, size );
     return vbo;
 }
 
-void set_vbo_data( struct vbo* vbo, float* vertices )
+void set_vbo_data( struct vbo* vbo, float* vertices, ssize_t size )
 {
     bind_vbo( vbo );
-    vbo->size = sizeof( vertices );
+    vbo->size = size;
 
     glBufferData( GL_ARRAY_BUFFER, vbo->size, vertices, GL_STATIC_DRAW );
 }
@@ -58,18 +58,18 @@ struct ibo* create_ibo()
     return ibo;
 }
 
-struct ibo* create_immediate_ibo( uint32_t* indices )
+struct ibo* create_immediate_ibo( uint32_t* indices, ssize_t size )
 {
     struct ibo* ibo = create_ibo();
     bind_ibo( ibo );
-    set_ibo_data( ibo, indices );
+    set_ibo_data( ibo, indices, size );
     return ibo;
 }
 
-void set_ibo_data( struct ibo* ibo, uint32_t* indices )
+void set_ibo_data( struct ibo* ibo, uint32_t* indices, ssize_t size )
 {
     bind_ibo( ibo );
-    ibo->size = sizeof( indices );
+    ibo->size = size;
 
     glBufferData( GL_ELEMENT_ARRAY_BUFFER, ibo->size, indices, GL_STATIC_DRAW );
 }
@@ -97,8 +97,8 @@ struct vao* create_vao()
     vao->bound_vbo = NULL;
     vao->bound_ibo = NULL;
 
-    vao->attrib_array_len = 1;
-    vao->attrib_array = malloc( sizeof( struct vertex_attrib ) );
+    vao->attrib_array_len = 0;
+    vao->attrib_array = NULL;
 
     vao->attrib_stride = 0;
 
@@ -120,22 +120,35 @@ void attach_ibo( struct vao* vao, struct ibo* ibo )
     vao->bound_ibo = ibo;
 }
 
+#include <stdlib.h>
+
 void enable_vertex_attrib( struct vao* vao, struct vertex_attrib attrib )
 {
-    vao->attrib_stride = 0;
+//    struct vertex_attrib* new_arr = malloc( (vao->attrib_array_len + 1) * sizeof( struct vertex_attrib ) );
+//    for (int i = 0; i < vao->attrib_array_len; i++) {
+//       vao->attrib_stride += vao->attrib_array[i].attrib_type_base_size * vao->attrib_array[i].attrib_type_components;
+//       new_arr[i] = vao->attrib_array[i];
+//    }
+//    new_arr[vao->attrib_array_len + 1] = attrib;
+//    free(vao->attrib_array);
+//    vao->attrib_array_len += 1;
+//
+//    vao->attrib_array = new_arr;
+//    vao->attrib_stride += attrib.attrib_type_base_size * attrib.attrib_type_components;
 
-    struct vertex_attrib* new_arr = malloc( sizeof( vao->attrib_array ) + ( sizeof( struct vertex_attrib ) ) );
+    struct vertex_attrib* new_arr = malloc( (vao->attrib_array_len + 1) * sizeof( struct vertex_attrib ) );
     for (int i = 0; i < vao->attrib_array_len; i++) {
-       vao->attrib_stride += vao->attrib_array[i].attrib_type_base_size * vao->attrib_array[i].attrib_type_components;
-       new_arr[i] = vao->attrib_array[i];
+        new_arr[i] = vao->attrib_array[i];
     }
-    new_arr[vao->attrib_array_len + 1] = attrib;
+    new_arr[vao->attrib_array_len] = attrib;
     free(vao->attrib_array);
-    vao->attrib_array_len += 1;
-
     vao->attrib_array = new_arr;
+    vao->attrib_array_len += 1;
     vao->attrib_stride += attrib.attrib_type_base_size * attrib.attrib_type_components;
 }
+
+
+#include <stdio.h> // REMOVEME(Chloe): Remove this when done testing
 
 void compile_vertex_attribs( struct vao* vao )
 {
@@ -147,6 +160,7 @@ void compile_vertex_attribs( struct vao* vao )
 
         glEnableVertexAttribArray( attrib.attrib_index );
         glVertexAttribPointer( attrib.attrib_index, attrib.attrib_type_components, attrib.attrib_type_base, 0, vao->attrib_stride, (void*) offset );
+        printf( "%i %i %i 0 %i %zi", attrib.attrib_index, attrib.attrib_type_components, attrib.attrib_type_base, vao->attrib_stride, offset );
 
         offset += attrib.attrib_type_base_size * attrib.attrib_type_components;
     }

@@ -4,6 +4,8 @@
 #include <game/shader.h>
 #include "glad/gl.h"
 
+// TODO(Chloe): Check to make sure the VertexArrays are registering properly
+
 #define TEMP_FSHADER_SOURCE "#version 400 core\n" \
                             "out vec4 FragColor;\n" \
                             "void main()\n" \
@@ -43,16 +45,18 @@ void preform_cleanup();
 int main()
 {
     struct window* window = create_window("Test", 720, 720);
+    glfwMakeContextCurrent(window->handle);
 
     setup_test_render();
 
-    while (!glfwWindowShouldClose( window->handle )) {
-        glfwSwapBuffers( window->handle );
 
-        glClear(GL_COLOR_BUFFER_BIT);
+    while (!glfwWindowShouldClose( window->handle )) {
         glClearColor((float) 255 / 255, (float) 11 / 255, (float) 200 / 255, (float ) 255 / 255);
+        glClear(GL_COLOR_BUFFER_BIT);
 
         preform_test_render();
+
+        glfwSwapBuffers( window->handle );
         glfwPollEvents();
     }
     preform_cleanup();
@@ -74,8 +78,8 @@ void setup_test_render()
     vao = create_vao();
     bind_vao( vao );
 
-    set_vbo_data( vbo, temp_quad );
-    set_ibo_data( ibo, temp_quad_indices );
+    set_vbo_data( vbo, temp_quad, sizeof( temp_quad ) );
+    set_ibo_data( ibo, temp_quad_indices, sizeof( temp_quad_indices ) );
 
     struct vertex_attrib attrib = {
             .attrib_index = 0,
