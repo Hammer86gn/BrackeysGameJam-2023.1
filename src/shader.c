@@ -65,6 +65,22 @@ void compile_program( struct shader_program* shader_program )
     }
 }
 
+void set_program_uniform( struct shader_program* shader_program, struct shader_uniform uniform )
+{
+    int32_t uniform_location = glGetUniformLocation( shader_program->program_id, uniform.uniform_name );
+
+    use_program( shader_program );
+    switch ( uniform.uniform_type ) {
+        case GL_FLOAT:
+            printf("Name: %s, Float: %f", uniform.uniform_name,  uniform.uniform_value.float_type );
+            glUniform1f( uniform_location, uniform.uniform_value.float_type );
+            break;
+        default:
+            perror("Unsupported type for a shader uniform\n");
+    }
+    use_no_program();
+}
+
 void use_program( struct shader_program* shader_program )
 {
     glUseProgram( shader_program->program_id );

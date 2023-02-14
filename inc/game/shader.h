@@ -4,9 +4,17 @@
 #include <stdint.h>
 #include <util/file.h>
 
-// TODO(Chloe): Shader Uniforms
 struct shader_program {
     uint32_t program_id;
+};
+
+struct shader_uniform {
+    const char* uniform_name;
+    int32_t uniform_type;
+
+    union uniform_value {
+        float float_type;
+    } uniform_value;
 };
 
 struct shader_program* create_program();
@@ -15,6 +23,8 @@ void attach_shader( struct shader_program* shader_program, const char* shader, i
 void attach_shader_file( struct shader_program* shader_program, file_path path, int32_t type );
 
 void compile_program( struct shader_program* shader_program );
+
+void set_program_uniform( struct shader_program* shader_program, struct shader_uniform uniform );
 
 void use_program( struct shader_program* shader_program );
 void use_no_program();

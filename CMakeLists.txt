@@ -10,6 +10,7 @@ add_subdirectory(lib/glad/cmake)
 
 glad_add_library(glad2 API gl:core=4.0)
 
+file(REMOVE_RECURSE ${CMAKE_BINARY_DIR}/res DESTINATION )
 file(COPY res DESTINATION "${CMAKE_BINARY_DIR}")
 
 file(GLOB_RECURSE SRC src/**.c)

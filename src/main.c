@@ -81,6 +81,13 @@ void setup_test_render()
     attach_shader_file( shader_program, "res/shaders/vertex/base_vertex.vsh", GL_VERTEX_SHADER );
     compile_program( shader_program );
 
+    struct shader_uniform test_uniform = {
+            .uniform_name = "red\0",
+            .uniform_type = GL_FLOAT,
+            .uniform_value = {.float_type = 0}
+    };
+    set_program_uniform( shader_program, test_uniform );
+
     vbo = create_vbo();
     ibo = create_ibo();
 
