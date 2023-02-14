@@ -39,11 +39,12 @@ void attach_shader( struct shader_program* shader_program, const char* source, i
 
     glAttachShader( shader_program->program_id, shader );
     glDeleteShader( shader ); // might have to be deleted later
+    free( source );
 }
 
 void attach_shader_file( struct shader_program* shader_program, file_path path, int32_t type )
 {
-    attach_shader( shader_program, read_file( path ), type );
+    attach_shader( shader_program, read_file(path), type );
 }
 
 void compile_program( struct shader_program* shader_program )

@@ -2,9 +2,9 @@
 #include <game/window.h>
 #include <game/render_buffers.h>
 #include <game/shader.h>
+#include <io.h>
+#include <limits.h>
 #include "glad/gl.h"
-
-// TODO(Chloe): Check to make sure the VertexArrays are registering properly
 
 #define TEMP_FSHADER_SOURCE "#version 400 core\n" \
                             "out vec4 FragColor;\n" \
@@ -68,8 +68,17 @@ void setup_test_render()
     shader_program = create_program();
 
 
-    attach_shader( shader_program, TEMP_FSHADER_SOURCE, GL_FRAGMENT_SHADER );
-    attach_shader( shader_program, TEMP_VSHADER_SOURCE, GL_VERTEX_SHADER );
+//    attach_shader( shader_program, TEMP_FSHADER_SOURCE, GL_FRAGMENT_SHADER );
+//    attach_shader( shader_program, TEMP_VSHADER_SOURCE, GL_VERTEX_SHADER );
+
+//    char cwd[PATH_MAX];
+//    if (getcwd(cwd, sizeof(cwd)) != NULL) {
+//        printf("Current working dir: %s\n", cwd);
+//    } else {
+//        perror("getcwd() error");
+//    }
+    attach_shader_file( shader_program, "res/shaders/fragment/base_fragment.fsh", GL_FRAGMENT_SHADER );
+    attach_shader_file( shader_program, "res/shaders/vertex/base_vertex.vsh", GL_VERTEX_SHADER );
     compile_program( shader_program );
 
     vbo = create_vbo();

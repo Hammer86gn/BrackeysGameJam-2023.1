@@ -147,9 +147,6 @@ void enable_vertex_attrib( struct vao* vao, struct vertex_attrib attrib )
     vao->attrib_stride += attrib.attrib_type_base_size * attrib.attrib_type_components;
 }
 
-
-#include <stdio.h> // REMOVEME(Chloe): Remove this when done testing
-
 void compile_vertex_attribs( struct vao* vao )
 {
     bind_vao( vao );
@@ -160,7 +157,6 @@ void compile_vertex_attribs( struct vao* vao )
 
         glEnableVertexAttribArray( attrib.attrib_index );
         glVertexAttribPointer( attrib.attrib_index, attrib.attrib_type_components, attrib.attrib_type_base, 0, vao->attrib_stride, (void*) offset );
-        printf( "%i %i %i 0 %i %zi", attrib.attrib_index, attrib.attrib_type_components, attrib.attrib_type_base, vao->attrib_stride, offset );
 
         offset += attrib.attrib_type_base_size * attrib.attrib_type_components;
     }
