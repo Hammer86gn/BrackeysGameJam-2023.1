@@ -1,97 +1,45 @@
 #include <math/vec2.h>
+#include <math.h>
 
 struct vec2 vec2_add( struct vec2 a, struct vec2 b )
 {
-    float resultX, resultY;
-
-    // 0, 1 - resultant
-    // 2, 3 - v1.x v1.y
-    // 4, 5 - v2.x v2.y
-    __asm__(
-            "FLDS %2 \n" // v1.x
-            "FADDS %4 \n" // v2.x
-            "FSTPS %0 \n"
-
-            "FLDS %3 \n"
-            "FADDS %5 \n"
-            "FSTPS %1 \n"
-            :"=m"(resultX), "=m"(resultY)
-            :"m"(a.x), "m"(a.y), "m"(b.x), "m"(b.y)
-            :
-            );
-
-    struct vec2 result = {.x = resultX, .y = resultY};
+    struct vec2 result = {.x = a.x + b.x, .y = a.y + b.y};
     return result;
 }
 
 struct vec2 vec2_multiply( struct vec2 a, struct vec2 b )
 {
-    float resultX, resultY;
-
-    // 0, 1 - resultant
-    // 2, 3 - v1.x v1.y
-    // 4, 5 - v2.x v2.y
-    __asm__(
-            "FLDS %2 \n" // v1.x
-            "FMULS %4 \n" // v2.x
-            "FSTPS %0 \n"
-
-            "FLDS %3 \n"
-            "FMULS %5 \n"
-            "FSTPS %1 \n"
-            :"=m"(resultX), "=m"(resultY)
-            :"m"(a.x), "m"(a.y), "m"(b.x), "m"(b.y)
-            :
-            );
-
-    struct vec2 result = {.x = resultX, .y = resultY};
+    struct vec2 result = {.x = a.x * b.x, .y = a.y * b.y};
     return result;
 }
 
 struct vec2 vec2_subtract( struct vec2 a, struct vec2 b )
 {
-    float resultX, resultY;
-
-    // 0, 1 - resultant
-    // 2, 3 - v1.x v1.y
-    // 4, 5 - v2.x v2.y
-    __asm__(
-            "FLDS %2 \n" // v1.x
-            "FSUBS %4 \n" // v2.x
-            "FSTPS %0 \n"
-
-            "FLDS %3 \n"
-            "FSUBS %5 \n"
-            "FSTPS %1 \n"
-            :"=m"(resultX), "=m"(resultY)
-            :"m"(a.x), "m"(a.y), "m"(b.x), "m"(b.y)
-            :
-            );
-
-    struct vec2 result = {.x = resultX, .y = resultY};
+    struct vec2 result = {.x = a.x - b.x, .y = a.y - b.y};
     return result;
 }
 
 struct vec2 vec2_divide( struct vec2 a, struct vec2 b )
 {
-    float resultX, resultY;
+    struct vec2 result = {.x = a.x / b.x, .y = a.y / b.y};
+    return result;
+}
 
-    // 0, 1 - resultant
-    // 2, 3 - v1.x v1.y
-    // 4, 5 - v2.x v2.y
-    __asm__(
-            "FLDS %2 \n" // v1.x
-            "FDIVS %4 \n" // v2.x
-            "FSTPS %0 \n"
+float vec2_length( struct vec2 vec2 )
+{
+    return sqrtf( ( vec2.x * vec2.x ) + ( vec2.y * vec2.y ) );
+}
 
-            "FLDS %3 \n"
-            "FDIVS %5 \n"
-            "FSTPS %1 \n"
-            :"=m"(resultX), "=m"(resultY)
-            :"m"(a.x), "m"(a.y), "m"(b.x), "m"(b.y)
-            :
-            );
+float vec2_length_squared( struct vec2 vec )
+{
+    return ( vec.x * vec.x ) + ( vec.y * vec.y );
+}
 
-    struct vec2 result = {.x = resultX, .y = resultY};
+struct vec2 normalize( struct vec2 vec )
+{
+    float length_squared = vec2_length_squared( vec );
+    float inverse = 1 / sqrtf( length_squared );
+
+    struct vec2 result = {.x = vec.x * inverse, .y = vec.y * inverse };
     return result;
 }
