@@ -7,3 +7,4 @@ You might be asking yourself why? Well... I thought it would be fun.
 Upstream:
     - GLFW: Windowing
     - GLAD: OpenGL function getter
+    - CGLM: Mathematics library
