@@ -15,6 +15,6 @@ struct vec2 vec2_divide(struct vec2 a, struct vec2 b);
 float vec2_length( struct vec2 vec );
 float vec2_length_squared( struct vec2 vec );
 
-struct vec2 normalize( struct vec2 vec );
+struct vec2 vec2_normalize( struct vec2 vec );
 
 #endif //BRACKEYSGAMEJAM_VEC2_H

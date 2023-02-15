@@ -49,7 +49,7 @@ void mat4_rotate( mat4* matrix, float radians, struct vec3 axis ) // I have zero
     float angle_cosine = cosf( radians );
     float angle_sine = sinf( radians );
 
-    struct vec3 normalized_axis = normalize( axis );
+    struct vec3 normalized_axis = vec3_normalize( axis );
 
     struct vec3 temp_scalar = {
             .x = 1 - angle_cosine,

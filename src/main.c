@@ -42,47 +42,25 @@ void setup_test_render();
 void preform_test_render();
 void preform_cleanup();
 
-//int main()
-//{
-//    struct window* window = create_window("Test", 720, 720);
-//    glfwMakeContextCurrent(window->handle);
-//
-//    setup_test_render();
-//
-//
-//    while (!glfwWindowShouldClose( window->handle )) {
-//        glClearColor((float) 255 / 255, (float) 11 / 255, (float) 200 / 255, (float ) 255 / 255);
-//        glClear(GL_COLOR_BUFFER_BIT);
-//
-//        preform_test_render();
-//
-//        glfwSwapBuffers( window->handle );
-//        glfwPollEvents();
-//    }
-//    preform_cleanup();
-//    destroy_window();
-//}
-
 int main()
 {
-#include <math/vec2.h>
+    struct window* window = create_window("Test", 720, 720);
+    glfwMakeContextCurrent(window->handle);
 
-    struct vec2 a = {
-            .x = 2,
-            .y = 3
-    };
-
-    struct vec2 b = {
-            .x = 3,
-            .y = 6
-    };
+    setup_test_render();
 
 
-    struct vec2 c;
+    while (!glfwWindowShouldClose( window->handle )) {
+        glClearColor((float) 255 / 255, (float) 11 / 255, (float) 200 / 255, (float ) 255 / 255);
+        glClear(GL_COLOR_BUFFER_BIT);
 
-    c = vec2_subtract(a, b);
-    printf("X: %f, Y:%f", c.x, c.y);
+        preform_test_render();
 
+        glfwSwapBuffers( window->handle );
+        glfwPollEvents();
+    }
+    preform_cleanup();
+    destroy_window();
 }
 
 void setup_test_render()

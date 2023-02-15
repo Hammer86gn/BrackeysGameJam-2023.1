@@ -5,3 +5,6 @@
 	path = lib/glad
 	url = https://github.com/dav1dde/glad
 	branch = glad2
+[submodule "lib/cglm"]
+	path = lib/cglm
+	url = https://github.com/recp/cglm

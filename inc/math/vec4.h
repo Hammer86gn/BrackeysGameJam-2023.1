@@ -17,7 +17,7 @@ struct vec4 vec4_divide(struct vec4 a, struct vec4 b);
 float vec4_length( struct vec4 vec );
 float vec4_length_squared( struct vec4 vec );
 
-struct vec4 normalize( struct vec4 vec );
+struct vec4 vec4_normalize( struct vec4 vec );
 
 
 #endif //BRACKEYSGAMEJAM_VEC4_H

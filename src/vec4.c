@@ -35,7 +35,7 @@ float vec4_length_squared( struct vec4 vec )
     return ( vec.x * vec.x ) + ( vec.y * vec.y ) + ( vec.z * vec.z ) + ( vec.w * vec.w );
 }
 
-struct vec4 normalize( struct vec4 vec )
+struct vec4 vec4_normalize( struct vec4 vec )
 {
     float length_squared = vec4_length_squared( vec );
     float inverse = 1 / sqrtf( length_squared );
