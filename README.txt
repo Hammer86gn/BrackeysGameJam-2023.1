@@ -8,3 +8,4 @@ Upstream:
     - GLFW: Windowing
     - GLAD: OpenGL function getter
     - CGLM: Mathematics library
+    - STBI: Image Loading
