@@ -3,6 +3,7 @@
 
 #include <stdint.h>
 #include <util/file.h>
+#include <cglm/mat4.h>
 
 struct shader_program {
     uint32_t program_id;
@@ -11,10 +12,7 @@ struct shader_program {
 struct shader_uniform {
     const char* uniform_name;
     int32_t uniform_type;
-
-    union uniform_value {
-        float float_type;
-    } uniform_value;
+    void* uniform_value;
 };
 
 struct shader_program* create_program();

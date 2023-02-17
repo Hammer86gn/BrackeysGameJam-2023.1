@@ -12,7 +12,9 @@ struct shader_program* create_program()
     }
 
     program->program_id = glCreateProgram();
-    glBindAttribLocation( program->program_id, 0, "position" );
+    glBindAttribLocation( program->program_id, 0, "pos" );
+    glBindAttribLocation( program->program_id, 1, "color" );
+    glBindAttribLocation( program->program_id, 2, "t_coord" );
     // TODO(Chloe): Add the other attribs like texture coords and color kthxbye
     //      these aren't needed if its specified in the shader e.g. layout (location = 0) in vec3 position
     //      but I honestly do not care those can be the exception to the "default" attributes
@@ -72,8 +74,12 @@ void set_program_uniform( struct shader_program* shader_program, struct shader_u
     use_program( shader_program );
     switch ( uniform.uniform_type ) {
         case GL_FLOAT:
-            printf("Name: %s, Float: %f", uniform.uniform_name,  uniform.uniform_value.float_type );
-            glUniform1f( uniform_location, uniform.uniform_value.float_type );
+            printf("Name: %s, Float: %f", uniform.uniform_name, *((float*) uniform.uniform_value) );
+            glUniform1f( uniform_location, *((float*) uniform.uniform_value) );
+            break;
+
+        case GL_MATRIX4_NV:
+            glUniformMatrix4fv( uniform_location, 1, GL_FALSE, (*((mat4*) uniform.uniform_value ))[0] );
             break;
         default:
             perror("Unsupported type for a shader uniform\n");

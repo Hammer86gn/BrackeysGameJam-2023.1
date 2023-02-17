@@ -42,24 +42,34 @@ void setup_test_render();
 void preform_test_render();
 void preform_cleanup();
 
+#include <game/renderer.h>
+
 int main()
 {
     struct window* window = create_window("Test", 720, 720);
     glfwMakeContextCurrent(window->handle);
 
-    setup_test_render();
+//    setup_test_render();
 
+    renderer_init();
+
+    struct texture* texture = create_texture( "res/assets/sprites/default_texture.png" );
 
     while (!glfwWindowShouldClose( window->handle )) {
         glClearColor((float) 255 / 255, (float) 11 / 255, (float) 200 / 255, (float ) 255 / 255);
         glClear(GL_COLOR_BUFFER_BIT);
 
-        preform_test_render();
+//        preform_test_render();
+
+        vec2 pos = { 2, 5 };
+        vec2 scale = { 1, 1 };
+        vec3 color = { 0xFF, 0x33, 0xCC };
+        render_quad( pos, scale, 90, color, texture );
 
         glfwSwapBuffers( window->handle );
         glfwPollEvents();
     }
-    preform_cleanup();
+//    preform_cleanup();
     destroy_window();
 }
 
@@ -84,7 +94,7 @@ void setup_test_render()
     struct shader_uniform test_uniform = {
             .uniform_name = "red\0",
             .uniform_type = GL_FLOAT,
-            .uniform_value = {.float_type = 0}
+            .uniform_value = 0
     };
     set_program_uniform( shader_program, test_uniform );
 

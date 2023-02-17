@@ -29,8 +29,7 @@ struct texture* create_texture( file_path path )
     if (texture->texture_channels == 4) {
         texture_channel = GL_RGBA8;
         image_channel = GL_RGBA;
-    }
-    else if (texture->texture_channels == 3) {
+    } else if (texture->texture_channels == 3) {
         texture_channel = GL_RGBA8;
         image_channel = GL_RGB;
     }
